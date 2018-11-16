@@ -1,13 +1,17 @@
+/**
+ * Class Description:
+ * @author Ian Bryan
+ * @version Nov. 16th 2018
+ * @param <T>
+ * 
+ * ArrayList.java contains the functionality and limits of the list that
+ * manages the ExpenseAccount.
+ */
 public class ArrayList<T> {
 
-    /*****************************************************/
-    /*					class variables					 */
-    /* arrList will store the list of objects			 */
-    /* nextElement is the input 'object' that will be	 */
-    /* added to the list								 */
-    /* arrListSize is determined by the number of args	 */
-    /* passed to the constructor						 */
-    /*****************************************************/
+    /**
+     * Class level data members.
+     * */
     private Object[] arrList;
     private int nextElement = 0;
     private int arrListSize;

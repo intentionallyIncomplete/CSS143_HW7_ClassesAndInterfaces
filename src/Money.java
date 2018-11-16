@@ -9,8 +9,7 @@ import java.io.Serializable;
  * Money.java holds data about the dollar and cent amounts of any transaction. Each "Money" can count towards a reduction
  * or addition to a Bill which affects the ExpenseAccount assigned to the Bill.
  */
-@SuppressWarnings("rawtypes") // Because this is a customized version of the compareTo method?
-public class Money implements Comparable, Cloneable, Serializable{
+public class Money implements Comparable<Money>, Cloneable, Serializable{
 
     /**
      * Default generated serialized ID. Allows for conversion of Money
@@ -76,21 +75,22 @@ public class Money implements Comparable, Cloneable, Serializable{
      * handed object against present object's amounts represented
      * in double type values. Will first check if the object handed was null
      * and immediately return false if the condition is satisfied.
+     * @param other - An object of type Money
      *
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object other){
+    public boolean equals(Money other){
 
-	if(((Money)other) == null){	return false;	}
-
-	else if(this.getMoney() == ((Money)other).getMoney()){	return true;	}
+	if((other) == null){	return false;	}
+	// Comparing doubles returned from getMoney()
+	else if(this.getMoney() == (other).getMoney()){	return true;	}
 	else{	return false;	}
     }
 
     /**
      * @return int - Returns integer value on the condition of some object
      * being less than, equal to, or greater than another.
+     * @param other - Represents another Money object to compare to.
      * 
      * Will always need to return an integer value within the domain of -1 <= x <= 1.
      * Will depend on the overriden toString method at the bottom of this vlass
@@ -98,23 +98,14 @@ public class Money implements Comparable, Cloneable, Serializable{
      * 
      * @see https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html
      * */
-    public int compareTo(Object other){
-
-	if(this.compareTo(((Money)other)) == 1){
-	    System.out.print("The present object " + this.getClass() + " is greater than " + other.getClass());
-	    return 1;
-	}else if(this.compareTo((Money)other) == 0){
-	    System.out.print("The present object + " + this.getClass() + " is equal to " + other.getClass());
-	    return 0;
-	}else{
-	    System.out.println("The present object " + this.getClass() + " is less than " + other.getClass());
-	    return -1;
-	}
+    public int compareTo(Money other) {
+	
+	return this.toString().compareTo(other.toString());
     }
 
 
     /**
-     * @param dollars
+     * @param dollars - integer
      * Allows adding to the Money object of whole, integer values.
      */
     public void add(int dollars){
@@ -177,7 +168,7 @@ public class Money implements Comparable, Cloneable, Serializable{
      * by this Money object.
      */
     public double getCents(){
-	return (double)(cents%100)/100;
+	return ((double)cents/100);
     }
 
     /**

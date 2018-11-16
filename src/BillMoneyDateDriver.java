@@ -8,10 +8,9 @@
  */
 public class BillMoneyDateDriver
 {
+
     /**
-     main driver function
-     pre:  none
-     post: exercises the methods in Bill, Money, and Date (not done)
+     * @param args
      */
     public static void main(String[] args)
     {
@@ -28,6 +27,33 @@ public class BillMoneyDateDriver
 	System.out.println("Now making another Money object with two arguments. One for dollars and one for cents.");
 	Money money2 = new Money(10,101); // = $10.01
 	System.out.println("Added " + money2.getDollars() + " and " + money2.getCents() + " to make a total of " + money2.toString());
+	System.out.println("Does money1 equal money2?::::" + money1.equals(money2));
+	// Set money1 to the values of money 1 and run the equals method again.
+	money1.setMoney(10, 101);
+	System.out.println("Does money1 equal money2?::::" + money1.equals(money2));
+	System.out.println("Running the compareTo() method:::: " + money1.compareTo(money2));
+	// Set money2 to some new values
+	money2.setMoney(20, 123);
+	System.out.println("money2 is now " + money2);
+	System.out.println("getCents " + money2.getCents());
+	System.out.println("Running the compareTo() method:::: " + money1.compareTo(money2));
+	money1.add(10);
+	System.out.println("Added $10 to money1 -  is now::: " + money1);
+	money1.add(10, 01);
+	System.out.println("Added $10 and 1 cent to money1 -  is now::: " + money1.getMoney());
+	money1.add(money2);
+	System.out.println("Added money2 to money1 -  is now::: " + money1.getMoney());
+	// Quick test of getters
+	System.out.println("getDollars() of money1 :: " + money1.getDollars());
+	System.out.println("getCents of money1 :: " + money1.getCents() + "\n" +
+			"------------------------\n------------------------");
+	/*---------------------------------------------------------------------*/
+	/**
+	 * Instantiation of Date objects and testing the methods in it.
+	 * */
+	//m,d,y
+	Date date1 = new Date(11,16,2018);
+	System.out.println("date1 = " + date1);
 	
     }
 }

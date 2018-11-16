@@ -1,24 +1,36 @@
 import java.io.Serializable;
 
-public class Date implements Comparable, Cloneable, Serializable{
+/**
+ * Class Description:
+ * @author Ian Bryan
+ * @version Nov. 16th 2018
+ *
+ * This is the Date class which only represents the values that a calendar date would hold.
+ * */
+public class Date implements Comparable<Date>, Cloneable, Serializable{
 
-    //class variables
+    /**
+     * Class level data members.
+     * */
     private int day;
     private int month;
     private int year;
 
-    /*****************************************************/
-    /* This ctor will check for a few invariants		 */
-    /* The days have to be 1 < days < 31 while the months*/
-    /* must be 1 < months < 12 and the year between 	 */
-    /* 2014 and 2024. The class variables will only be 	 */
-    /* set if all these conditions are met true.		 */
-    /*****************************************************/
+    /**
+     * @param month
+     * @param day
+     * @param year
+     * 
+     * Constructor takes 3 arguments for month,day,year format.
+     * Conditions:
+     * 	If 0 < day < 32 && 0 < month < 13 && 2014 < year < 2025
+     * 		Object Date is made with the handed values
+     * 		else the program exits.
+     */
     public Date(int month, int day, int year){
 
 	if(day < 1 || day > 31){
 	    System.out.println("invalid day: " + day);
-	    assert(day > 0);
 	    System.exit(0);
 	}else if(month < 1 || month > 12){
 	    System.out.println("invalid month: "+ month);
@@ -27,29 +39,26 @@ public class Date implements Comparable, Cloneable, Serializable{
 	    System.out.println("invalid year: " + year);
 	    System.exit(0);
 	}else{
-	    this.day = day;
-	    this.month = month;
-	    this.year = year;
+	    this.setDay(day);
+	    this.setMonth(month);
+	    this.setYear(year);
 	}
     }
 
-    /* DEPRECIATED 
+    /**DEPRECIATED 
      * 
-     * This copy constructor is no longer used
-     * @see overriden clone() method
-     * 
+     * @param other - another Date.
+     * This copy constructor is no longer used.
+     * See the clone method in this class.
      * */
-    public Date(Date other){
-	this.day = other.day;
-	this.month = other.month;
-	this.year = other.year;
+    public Date(Date other){	
+	System.out.println("Sorry, this method of cloning is not supported. Use obj.clone() instead");	
     }
 
-    /*
-     *  This method overrides the default clone() method
+    /**
+     * This method overrides the default clone() method
      * that is protected in the Cloneable interface and
-     * replaces the need for the copy constructor above
-     * 
+     * replaces the need for the copy constructor above.
      * */
     public Date clone(){
 	try{
@@ -60,11 +69,14 @@ public class Date implements Comparable, Cloneable, Serializable{
 	}
     }
 
-    /*****************************************************/
-    /* the isAfter method will return false under any	 */
-    /* condition unless the day of the handed date is GT */
-    /* the current one by as little as 1 day			 */
-    /*****************************************************/
+    /**
+     * @param compareToDate
+     * @return boolean - Returns a boolean value for if the date handed is after the
+     * one making the comparison. Will always return true on the condition that
+     * at least one day has passed since the other Date
+     * 
+     * Checks on the order days --> months --> years
+     */
     public boolean isAfter(Date compareToDate){
 	if(compareToDate.day < day && compareToDate.month <= month
 		&& compareToDate.year <= year){
@@ -74,17 +86,11 @@ public class Date implements Comparable, Cloneable, Serializable{
 	}
     }
 
-    /*
-     * This method has one parameter that is an Object
-     * used to check against the current Object for
-     * equivalence. 
+    /**
+     * @param other - A Date object to be compared with.
      * */
-    @Override
-    public boolean equals(Object date){
-	//using the custom toString method on both
-	//objects is necessary to be able to compare them
-	//in the same format
-	if(this.toString().equals(date.toString())){
+    public boolean equals(Date other){
+	if(this.toString().equals(other.toString())){
 	    System.out.println("the two dates are the same");
 	    return true;
 	}else{
@@ -93,52 +99,41 @@ public class Date implements Comparable, Cloneable, Serializable{
 	}
     }
 
-    /* *
-     * Custom compareTo method that overrides the
-     * compareTo method from the Comparable interface.
-     * Returns an integer similarly to the native compareTo
-     * method. 1 for a match, and -1 for difference.
-     *
-     * @param otherDate is an object data type variable
-     * that represents a Date value. 
-     * @param tempDateObj is the current date being compared to
-     * the previous instantiation. Assigned with a cast to the Date class
-     * on the Object otherDate.
-     * @see compareTo() in Comparable interface
-     * @see overriden equals() method in Date
+    /**
+     * Uses Comparable interface to compare two
+     * Date objects against each other. Returns
+     * -1 <= X <= 1 when less than, equal to, and greater than respectively.
      * */
-    public int compareTo(Object otherDate){
-	Date tempDateObj = (Date) otherDate;
-
-	if(this.equals(tempDateObj)){
-	    return 1;
-	}else{
-	    return -1;
-	}
+    public int compareTo(Date other){
+	return this.getDate().compareTo(other.getDate());
     }
 
-    /*****************/
-    /* Begin getters */
-    /*****************/
+    /**
+     * @return integer - Returns integer value of the day of this Date.
+     */
+    public int getDay(){	return day;	}
 
-    public int getDay(){
-	return day;
-    }
+    /**
+     * @return integer - Returns the integer value of the month of this Date.
+     */
+    public int getMonth(){	return month;	}
 
-    public int getMonth(){
-	return month;
-    }
-
-    public int getYear(){
-	return year;
-    }
-
-    /*****************************************************/
-    /* End getters, begin setters. These setters include */
-    /* the validation of the date when called from the	 */
-    /* BillMoneyDateDriver class and prevent illegal	 */
-    /* dates or the changing of dates to curb due dates	 */
-    /*****************************************************/
+    /**
+     * @return integer - Returns the integer value of the year of this Date.
+     */
+    public int getYear(){	return year;	}
+    
+    /**
+     * @return Date - returns a Date.
+     */
+    public Date getDate(){	return this;	}
+    
+    /**
+     * @param day
+     * 
+     * Sets the value for the Date's day.
+     * Checks first the condition is satisfied that the day is valid.
+     */
     public void setDay(int day){
 	if(day < 1 || day > 31){
 	    System.out.println("invalid day " + day + "\nProgram Exiting...");
@@ -149,6 +144,12 @@ public class Date implements Comparable, Cloneable, Serializable{
 	}
     }
 
+    /**
+     * @param month
+     * 
+     * Sets the value for the Date's month.
+     * Checks first the condition is satisfied that the month is valid.
+     */
     public void setMonth(int month){
 	if(month < 1 || month > 12){
 	    System.out.println("invalid month " + month + "\nProgram Exiting...");
@@ -160,6 +161,12 @@ public class Date implements Comparable, Cloneable, Serializable{
 	}
     }
 
+    /**
+     * @param year
+     * 
+     * Sets the value for the Date's year.
+     * Checks first the condition is satisfied that the year is year.
+     */
     public void setYear(int year){
 	if(year < 2014 || year > 2024){
 	    System.out.println("invalid year " + year);
@@ -169,10 +176,7 @@ public class Date implements Comparable, Cloneable, Serializable{
 	    this.year = year;
 	}
     }
-
-    /**************/
-    /* end setters*/
-    /**************/
+    
     @Override
     public String toString(){
 	return month + "/" + day + "/" + year;
