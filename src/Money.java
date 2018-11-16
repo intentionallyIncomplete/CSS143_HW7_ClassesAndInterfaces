@@ -9,8 +9,14 @@ import java.io.Serializable;
  * Money.java holds data about the dollar and cent amounts of any transaction. Each "Money" can count towards a reduction
  * or addition to a Bill which affects the ExpenseAccount assigned to the Bill.
  */
+@SuppressWarnings("rawtypes") // Because this is a customized version of the compareTo method?
 public class Money implements Comparable, Cloneable, Serializable{
 
+    /**
+     * Default generated serialized ID. Allows for conversion of Money
+     * to byte stream for writing to files and reading into stream later.
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * Class level data members
      * */
