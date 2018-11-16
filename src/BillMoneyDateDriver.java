@@ -54,6 +54,11 @@ public class BillMoneyDateDriver
 	//m,d,y
 	Date date1 = new Date(11,16,2018);
 	System.out.println("date1 = " + date1);
-	
+	Date date2 = new Date(7,14,2020);
+	System.out.println("Created date2 with values :: " + date2);
+	date2.setDate(date1);
+	System.out.println("Set the value of date2 to date1 using setDate(). Date2 is: " + date2);
+	System.out.println("isAfter? :: " + date2.isAfter(date1));
+	System.out.println("isAfter? :: " + date1.isAfter(date2));
     }
 }

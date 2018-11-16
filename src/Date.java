@@ -70,19 +70,20 @@ public class Date implements Comparable<Date>, Cloneable, Serializable{
     }
 
     /**
-     * @param compareToDate
+     * @param other - A Date.
      * @return boolean - Returns a boolean value for if the date handed is after the
      * one making the comparison. Will always return true on the condition that
      * at least one day has passed since the other Date
      * 
      * Checks on the order days --> months --> years
      */
-    public boolean isAfter(Date compareToDate){
-	if(compareToDate.day < day && compareToDate.month <= month
-		&& compareToDate.year <= year){
+    public boolean isAfter(Date other){
+	if(this.toString().compareTo(other.toString()) < 0){
 	    return false;
-	}else{
+	}else if (this.toString().compareTo(other.toString()) > 0){
 	    return true;
+	}else{
+	    return false;
 	}
     }
 
@@ -175,6 +176,17 @@ public class Date implements Comparable<Date>, Cloneable, Serializable{
 	}else{
 	    this.year = year;
 	}
+    }
+    
+    /**
+     * @param other - A Date.
+     * 
+     * Allows for setting the Date to new values.
+     */
+    public void setDate(Date other){
+	this.setDay(other.day);
+	this.setMonth(other.month);
+	this.setYear(other.year);
     }
     
     @Override

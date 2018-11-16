@@ -99,7 +99,6 @@ public class Money implements Comparable<Money>, Cloneable, Serializable{
      * @see https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html
      * */
     public int compareTo(Money other) {
-	
 	return this.toString().compareTo(other.toString());
     }
 

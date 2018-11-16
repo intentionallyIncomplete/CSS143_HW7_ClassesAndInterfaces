@@ -17,25 +17,38 @@ public class ArrayList<T> {
     private int arrListSize;
 
 
+    /**
+     * @param arrListSize
+     * 
+     * Constructor takes in integer size of number of ExpenseAccount Bills
+     * to handle.
+     */
     public ArrayList(int arrListSize){
 	this.arrListSize = arrListSize;
 	this.arrList = new Object[arrListSize];
     }
 
+    /**
+     * Constructor takes no arguments. No Bill available for the ExpenseAccount
+     * so the list is empty.
+     */
     public ArrayList(){
 	arrList = new Object[1];
 	nextElement = 0;
     }
 
-    /*****************************************************/
-    /* takes in an object and the specified index ## in	 */
-    /* the array and adds the object at that position	 */
-    /* does not check for valid input					 */
-    /*****************************************************/
+   
+    /**
+     * @param anElement
+     * @param index
+     */
     public void insert(Object anElement, int index){
 	arrList[index] = anElement;
     }
 
+    /**
+     * @return
+     */
     public int getIndex(){
 	int index = arrList.length -1;
 	return index;

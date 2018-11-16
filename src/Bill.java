@@ -1,24 +1,28 @@
 import java.io.Serializable;
 
-public class Bill implements Comparable, Cloneable, Serializable{
+/**
+ * Class Description:
+ * @author Ian Byan
+ * @version Nov.16th, 2018
+ * 
+ * Represents a Bill which holds values of Money and Date.
+ */
+public class Bill implements Comparable<Bill>, Cloneable, Serializable{
 
-    /****************************************************/
-    /* These are objects from the Money and Date class  */
-    /* the ctor for this class will be working with the */
-    /* assignment of the object's values by the args    */
-    /* values passed in through it.						*/
-    /****************************************************/
+    /**
+     * Class level data members.
+     * */
     private Money amount;
     private Date dueDate;
     private Date paidDate;
     private String originator;
 
-    /*****************************************************/
-    /* The 'amount' and 'dueDate' values are assigned	 */
-    /* to the private objects Money and Date respectively*/
-    /* a new Date object is created for the paidDate and */
-    /* set to a null value.								 */
-    /*****************************************************/
+
+    /**
+     * @param amount
+     * @param dueDate
+     * @param originator
+     */
     public Bill(Money amount, Date dueDate, String originator){
 	this.amount = amount;
 	this.dueDate = dueDate;
@@ -26,19 +30,15 @@ public class Bill implements Comparable, Cloneable, Serializable{
 	this.originator = originator;
     }
 
-    /*****************************************************/
-    /* This is the copy ctor for the Bill class. It will */
-    /* basically this just sets the current value of the */
-    /* objects to a copy of the object, value by value	 */
-    /*****************************************************/
+
+    /**[DEPRECIATED]
+     * @param toCopy
+     */
     public Bill(Bill toCopy){
-	this.amount = toCopy.amount;
-	this.dueDate = toCopy.dueDate;
-	this.paidDate = toCopy.paidDate;
-	this.originator = toCopy.originator;
+	System.out.println("This method is no longer supported. Use clone instead.");
     }
 
-    /*
+    /**
      * This method overrides the protected clone()
      * method from the Cloneable interface. A new Bill object
      * is instantiated using the current values of Bill. Then,
@@ -62,13 +62,11 @@ public class Bill implements Comparable, Cloneable, Serializable{
 
     }
 
-    /****************************************************/
-    /* This method will check if the paidDate Date		*/
-    /* object is set or not, if not then the bill hasn't*/
-    /* been paid and the method should return false.	*/
-    /* Of course, if it's not null, then the bill has	*/
-    /* been paid.										*/
-    /****************************************************/
+    
+    /**
+     * @return boolean - Returns boolean value on the condition
+     * of paidDate being null.
+     */
     public boolean isPaid(){
 	if(paidDate != null){
 	    return true;
@@ -77,20 +75,15 @@ public class Bill implements Comparable, Cloneable, Serializable{
 	}
     }
 
-    /*
-     * <p>
-     * Custom equals() method. This method has one parameter that is an Object
-     * data type and holds the current values of the Bill object. 
-     * The new values are compared against the previous instantiated values.
-     * </p>
+    /**
+     * @param other - A Bill object.
      * 
-     * @param toCompare is an Object that holds the current values of the
-     * Bill class fields such as the amount and dueDate
+     * Takes in a Bill to be checked against another.
      * */
-    @Override
-    public boolean equals(Object toCompare){
-	Bill tempBillObj = (Bill) toCompare;
-	if(this.amount.equals(tempBillObj.getAmount())){
+    public boolean equals(Bill other){
+	if(this.getDueDate().equals(dueDate)
+		&& this.getAmount() == other.getAmount()
+		&& this.paidDate.equals(other.paidDate)){
 	    return true;
 	}else{
 	    return false;
@@ -98,7 +91,7 @@ public class Bill implements Comparable, Cloneable, Serializable{
     }
 
 
-    /*
+    /**
      * This compareTo() method overrides the default
      * compareTo() method and acts in a similar fashion.
      * The return value is an integer of 1 for the objects
@@ -108,30 +101,30 @@ public class Bill implements Comparable, Cloneable, Serializable{
      * pass the values of a Bill through into the method.
      * 
      * */
-    public int compareTo(Object other){
-
-	Bill tempBillObj = (Bill) other;
-
-	if(this.equals(tempBillObj)){
-	    return 1;
-	}else{
-	    return -1;
-	}
+    public int compareTo(Bill other){
+	return this.compareTo(other);
     }
 
-    /****************************************************/
-    /* Begin getters*/
-    /****************************************************/
+
+    /**
+     * @return
+     */
     public Money getAmount(){
-	return amount;
+	return this.amount;
     }
 
+    /**
+     * @return
+     */
     public Date getDueDate(){
-	return dueDate;
+	return this.dueDate;
     }
 
+    /**
+     * @return
+     */
     public String getOriginator(){
-	return originator;
+	return this.originator;
     }
     /****************************************************/
     /* End getters, begin setters */
