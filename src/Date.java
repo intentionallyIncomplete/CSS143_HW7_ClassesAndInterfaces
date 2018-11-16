@@ -83,19 +83,20 @@ public class Date implements Comparable<Date>, Cloneable, Serializable{
 	}else if (this.toString().compareTo(other.toString()) > 0){
 	    return true;
 	}else{
+	    System.out.println("The dates are the same");
 	    return false;
 	}
     }
 
     /**
      * @param other - A Date object to be compared with.
+     * @return boolean - Will return true or false on the condition
+     * of the two Dates being equal to each other.
      * */
     public boolean equals(Date other){
 	if(this.toString().equals(other.toString())){
-	    System.out.println("the two dates are the same");
 	    return true;
 	}else{
-	    System.out.println("the two dates are not the same");
 	    return false;
 	}
     }

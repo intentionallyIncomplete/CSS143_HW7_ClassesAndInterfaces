@@ -58,7 +58,14 @@ public class BillMoneyDateDriver
 	System.out.println("Created date2 with values :: " + date2);
 	date2.setDate(date1);
 	System.out.println("Set the value of date2 to date1 using setDate(). Date2 is: " + date2);
+	date2.setYear(2023); //toggle this to test isAfter and equals.
 	System.out.println("isAfter? :: " + date2.isAfter(date1));
 	System.out.println("isAfter? :: " + date1.isAfter(date2));
+	System.out.println("equals()? :: " + date1.equals(date2));
+	
+	Bill bill_1 = new Bill(money1, date1, "University of Washington");
+	System.out.println("Current Bill --> " + bill_1);
+	bill_1.setDueDate(date2);
+	System.out.println("Updated due date --> " + bill_1.getDueDate());
     }
 }

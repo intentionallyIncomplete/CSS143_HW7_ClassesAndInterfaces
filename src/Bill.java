@@ -17,7 +17,6 @@ public class Bill implements Comparable<Bill>, Cloneable, Serializable{
     private Date paidDate;
     private String originator;
 
-
     /**
      * @param amount
      * @param dueDate
@@ -107,21 +106,21 @@ public class Bill implements Comparable<Bill>, Cloneable, Serializable{
 
 
     /**
-     * @return
+     * @return Returns the amount of Money.
      */
     public Money getAmount(){
 	return this.amount;
     }
 
     /**
-     * @return
+     * @return Returns the Date the Bill was set to be due by.
      */
     public Date getDueDate(){
 	return this.dueDate;
     }
 
     /**
-     * @return
+     * @return Returns the name of the entity doing the charging.
      */
     public String getOriginator(){
 	return this.originator;
@@ -130,14 +129,11 @@ public class Bill implements Comparable<Bill>, Cloneable, Serializable{
     /* End getters, begin setters */
     /****************************************************/
 
-    /*
-     * This setter method will use the isAfter method
-     * from the Date class to compare 
-     * the dueDate object value to the 
-     * datePaid object's value. If the dueDate object
-     * returns false from isAfter, then return false for setPaid
-     * else update the paidDate with the value of datePaid 
-     * and return true.
+    /**
+     * @param datePaid
+     * 
+     * Allows setting of the date paid for the present Bill in question.
+     * 
      */
     public boolean setPaid(Date datePaid){
 	if(datePaid.isAfter(dueDate)){
@@ -151,12 +147,9 @@ public class Bill implements Comparable<Bill>, Cloneable, Serializable{
 	}
     }
 
-    /*
-     * This boolean method will check for the next
-     * provided date value. if the method isPaid is true,
-     * then the dueDate is irrelevant and the method returns false
-     * or else if the bill is not paid, then update the dueDate
-     * to the provided value of nextDate.
+    /**
+     * @param nextDate - A Date that is the value of the next date
+     * the bill should be paid by.
      * */
     public boolean setDueDate(Date nextDate){
 	if(isPaid()){
