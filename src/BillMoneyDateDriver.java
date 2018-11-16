@@ -1,12 +1,10 @@
 /**
+ * Class Description:
  * @author Ian Bryan
+ * @version Nov. 15th, 2018
  * 
- * Note: Uncomment for testing. Each added method has its own area
- * in the main method for testing from each class.
- * 
- * All comments previously not in Javadoc format have been converted
- * with exclusion to the lines that are to be uncommented one at a time
- * for testing. 
+ * This is the driver or `main` class of the entire program. All tests and calls to different methods in
+ * all the classes is done here.
  */
 public class BillMoneyDateDriver
 {
@@ -22,6 +20,14 @@ public class BillMoneyDateDriver
 	 * */
 	System.out.println("Making Money with value of $1");
 	Money money1 = new Money(1);
-	System.out.println("Value of Money(1):::" + money1.toString());
+	System.out.println("Value of Money(1) == " + money1.toString());
+	
+	Money moneyClone = money1.clone();
+	System.out.println("Testing clone method. Cloned " + money1.toString() + 
+		" to object moneyClone with a value of " + moneyClone.toString());
+	System.out.println("Now making another Money object with two arguments. One for dollars and one for cents.");
+	Money money2 = new Money(10,101); // = $10.01
+	System.out.println("Added " + money2.getDollars() + " and " + money2.getCents() + " to make a total of " + money2.toString());
+	
     }
 }

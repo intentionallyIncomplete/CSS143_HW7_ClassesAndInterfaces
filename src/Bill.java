@@ -108,7 +108,6 @@ public class Bill implements Comparable, Cloneable, Serializable{
      * pass the values of a Bill through into the method.
      * 
      * */
-    @Override
     public int compareTo(Object other){
 
 	Bill tempBillObj = (Bill) other;

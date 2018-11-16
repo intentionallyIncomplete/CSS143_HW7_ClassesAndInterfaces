@@ -107,7 +107,6 @@ public class Date implements Comparable, Cloneable, Serializable{
      * @see compareTo() in Comparable interface
      * @see overriden equals() method in Date
      * */
-    @Override
     public int compareTo(Object otherDate){
 	Date tempDateObj = (Date) otherDate;
 

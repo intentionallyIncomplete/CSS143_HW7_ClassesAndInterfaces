@@ -41,7 +41,7 @@ public class Money implements Comparable, Cloneable, Serializable{
      * dollars and cents input. Cents are converted to dollars later.
      * */
     public Money(int dollars, int cents){
-	this.add(dollars, cents);
+	this.setMoney(dollars, cents);
     }
 
     /** [DEPRECIATED]
@@ -137,7 +137,8 @@ public class Money implements Comparable, Cloneable, Serializable{
      */
     public void add(int dollars, int cents){
 	if(dollars >=0 && cents >= 0){
-	    this.dollars = dollars + ((cents%100)+(cents/100));
+	    this.dollars += dollars;
+	    this.cents += cents;
 	}else{
 	    System.out.println("Values added must be positive.");
 	}
@@ -176,7 +177,7 @@ public class Money implements Comparable, Cloneable, Serializable{
      * by this Money object.
      */
     public double getCents(){
-	return (cents%100) + (cents/100);
+	return (double)(cents%100)/100;
     }
 
     /**
