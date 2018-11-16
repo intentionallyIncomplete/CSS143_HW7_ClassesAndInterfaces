@@ -1,141 +1,199 @@
 import java.io.Serializable;
 
+/**
+ * Class Description:
+ * @author Ian Bryan
+ * @version Nov. 15th, 2018
+ * JRE Compliance version 1.5
+ * 
+ * Money.java holds data about the dollar and cent amounts of any transaction. Each "Money" can count towards a reduction
+ * or addition to a Bill which affects the ExpenseAccount assigned to the Bill.
+ */
 public class Money implements Comparable, Cloneable, Serializable{
 
-	//class variables
-	private int dollars;
-	private double cents;
+    /**
+     * Class level data members
+     * */
+    private int dollars;
+    private int cents;
 
-	//when only being passed int's that
-	//represent whole dollars
-	public Money(int dollars){
-		this.dollars = dollars;
-		this.cents = 0;
-	}
+    /**
+     * Constructor for Money that takes only a single integer argument for dollars.
+     * Set cents to 0.
+     * @param dollars  - integer value for dollars.
+     * */
+    public Money(int dollars){
+	this.add(dollars);
+	this.cents = 0;
+    }
 
-	//when passed two args, one for whole dollars
-	//and the other for cents represented as whole numbers
-	public Money(int dollars, int cents){
-		this.dollars = dollars;
-		this.cents = cents;
-	}
+    /**
+     * @param dollars
+     * @param cents 
+     * 
+     * Other constructor for Money takes in two integer arguments to allow for
+     * dollars and cents input. Cents are converted to dollars later.
+     * */
+    public Money(int dollars, int cents){
+	this.add(dollars, cents);
+    }
 
-	//copy ctor
-	public Money(Money other){
-		this.dollars = other.dollars;
-		this.cents = other.cents;
-	}
-	
-	/*
-	 * This method follows the same logic as the other
-	 * clone() methods in Date and Bill.
-	 * 
-	 * @see Date
-	 * @see Bill
-	 * */
-	@Override
-	public Money clone(){
-		try{
-			Money newMoney = (Money) super.clone();
-			return newMoney;
-		}catch(CloneNotSupportedException e){
-			return null;
-		}
-	}
+    /** [DEPRECIATED]
+     * Copy constructor no longer used.
+     * @param other  - a separate Money that may have the same or different values.
+     * @see clone()
+     * */
+    public Money(Money other){
+	System.out.println("Use obj.clone() for copies");
+    }
 
-	/*
-	 * If the current object's return value(non-Javadoc)
-	 * is equal to the one compared against,
-	 * print a message and return true,
-	 * else print a different message and return false.
-	 * the equals method here compares them as doubles.
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+    /**
+     * Clone method for class Money will attempt to use the 
+     * constructor of itself to make a new copy using the same data.
+     * 
+     * Generates and throws a CloneNotSupportedException on attempts
+     * to create a clone of Money without using clone().
+     * */
+    @Override
+    public Money clone(){
+	try{
+	    Money newMoney = (Money) super.clone();
+	    return newMoney;
+	}catch(CloneNotSupportedException cnse){
+	    System.out.println("Could not create copy" + cnse.getCause());
+	    return null;
+	}
+    }
 
-	@Override
-	public boolean equals(Object otherAmount){
-		Money tempMoneyObj = (Money) otherAmount;
-		
-		if(this.getMoney() == tempMoneyObj.getMoney()){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	/*
-	 * This method works similar in logic to the other
-	 * classes compareTo methods that use the overriden
-	 * equals() method of that class to compare the object's values
-	 * against each other.
-	 * 
-	 * @see Date
-	 * @see Money
-	 * */
-	@Override
-	public int compareTo(Object otherMoney){
-		
-		Money tempMoneyObj = (Money) otherMoney;
-		
-		if(this.equals(tempMoneyObj)){
-			return 1;
-		}else{return -1;}
-	}
-	
-	/* Will take in dollar amount and add to current count.*/
-	public void add(int dollars){
-		this.dollars += dollars;
-	}
+    /**
+     * @return boolean - Returns boolean from comparing
+     * handed object against present object's amounts represented
+     * in double type values. Will first check if the object handed was null
+     * and immediately return false if the condition is satisfied.
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object other){
 
-	/* 
-	 * Takes in dollars and cents to add their sums
-	 * individually to the current count.
-	 */
-	public void add(int dollars, int cents){
-		this.dollars += dollars;
-		this.cents = cents;
-	}
-	
-	/*
-	 * Will add the handed Money object's value
-	 * to the count of the current object's value
-	 * individually for dollars and cents.
-	 */
+	if(((Money)other) == null){	return false;	}
 
-	public void add(Money other){
-		this.dollars += other.dollars;
-		this.cents += other.cents;
-	}
-	
-	/****************************************************/
-	/* Being getters */
-	/****************************************************/
-	public double getMoney(){
-		return dollars + ((double)cents/100);
-	}
-	
-	public int getDollars(){
-		return dollars;
-	}
-	
-	public int getCents(){
-		return (int)cents;
-	}
-	
-	/****************************************************/
-	/* End getters, begin setters */
-	/****************************************************/
-	public void setMoney(int dollars, int cents){
-		this.dollars = dollars;
-		this.cents = cents;
-	}
+	else if(this.getMoney() == ((Money)other).getMoney()){	return true;	}
+	else{	return false;	}
+    }
 
-	/*String.format(format, arg) is there to set the returned amount
-	* to display as a number with two decimal places
-	*/
-	@Override
-	public String toString(){
-		return "$" + String.format("%.2f", getMoney());
+    /**
+     * @return int - Returns integer value on the condition of some object
+     * being less than, equal to, or greater than another.
+     * 
+     * Will always need to return an integer value within the domain of -1 <= x <= 1.
+     * Will depend on the overriden toString method at the bottom of this vlass
+     * to be able to compare the objects since the Comparable interface works with String objects only I think.
+     * 
+     * @see https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html
+     * */
+    public int compareTo(Object other){
+
+	if(this.compareTo(((Money)other)) == 1){
+	    System.out.print("The present object " + this.getClass() + " is greater than " + other.getClass());
+	    return 1;
+	}else if(this.compareTo((Money)other) == 0){
+	    System.out.print("The present object + " + this.getClass() + " is equal to " + other.getClass());
+	    return 0;
+	}else{
+	    System.out.println("The present object " + this.getClass() + " is less than " + other.getClass());
+	    return -1;
 	}
+    }
+
+
+    /**
+     * @param dollars
+     * Allows adding to the Money object of whole, integer values.
+     */
+    public void add(int dollars){
+	if(dollars >= 0){
+	    this.dollars += dollars;    
+	}else{
+	    System.out.println("Amount must be greater than or equal to 0. Cannot take on negative dollar amounts");
+	}
+    }
+
+    /**
+     * @param dollars
+     * @param cents
+     * 
+     * Overloaded method with signature that allows for two input parameters to
+     * represent dollars and cents.
+     * 
+     * <i>cents are converted to dollars if >= 100 using the `%` operator to gain the remainder of x/100 
+     * and the `/` operator to gain the integer value of x/100.</i>
+     */
+    public void add(int dollars, int cents){
+	if(dollars >=0 && cents >= 0){
+	    this.dollars = dollars + ((cents%100)+(cents/100));
+	}else{
+	    System.out.println("Values added must be positive.");
+	}
+    }
+
+    /**
+     * @param other
+     * 
+     * Allows adding of an actual money object to another Money object.
+     * Error checking is already done on the Money's value before it's
+     * instantiated so no conditions are checked here.
+     */
+    public void add(Money other){
+	this.dollars += other.getDollars();
+	this.cents += other.getCents();
+    }
+
+    /**
+     * @return double - Returns a double value that is the amount of Money
+     * currently stored in the Money object that's being called on.
+     */
+    public double getMoney(){
+	return this.getDollars() + this.getCents();
+    }
+
+    /**
+     * @return int - Returns the integer value of the dollar amount held
+     * by this Money object.
+     */
+    public int getDollars(){
+	return this.dollars;
+    }
+
+    /**
+     * @return int - Returns the integer value of the cent amount held
+     * by this Money object.
+     */
+    public double getCents(){
+	return (cents%100) + (cents/100);
+    }
+
+    /**
+     * @param dollars
+     * @param cents
+     * 
+     * Sets whatever the current integer values of dollar and cents are to the amount
+     * handed through the method parameters.
+     */
+    public void setMoney(int dollars, int cents){
+	if(dollars >= 0 && cents >= 0){
+	    this.dollars = dollars;
+	    this.cents = cents;
+	}else{
+	    System.out.println("Amounts of dollars and cents must be greater than or equal to 0");
+	}
+    }
+
+    /**
+     * @return String - Returns a String value of the Money's attributes in units of USD.
+     * */
+    @Override
+    public String toString(){
+	return "$" + String.format("%.2f", getMoney());
+    }
 }
